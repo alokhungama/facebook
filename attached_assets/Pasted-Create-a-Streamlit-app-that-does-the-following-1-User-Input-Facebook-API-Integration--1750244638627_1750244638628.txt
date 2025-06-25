@@ -1,0 +1,48 @@
+Create a Streamlit app that does the following:
+
+1. **User Input & Facebook API Integration**:
+   - Takes a Facebook Ads account ID as user input via a text box.
+   - Uses the Facebook Marketing API to fetch:
+     - Campaigns
+     - Ad Sets
+     - Ads
+     - Insights (for campaigns or ad sets)
+   - Fetch data with pagination (use limit=500 per request).
+   - Use `requests` module with proper access token (can be hardcoded for now or added via secret config).
+   - Show progress bar or status messages while data is being fetched.
+
+2. **Database Layer**:
+   - Connect to an external PostgreSQL database (credentials should be added via Streamlit secrets or config).
+   - Create tables for `campaigns`, `adsets`, `ads`, and `insights` using appropriate schema.
+   - Insert or upsert the fetched data into the DB using SQLAlchemy or psycopg2.
+
+3. **Smart Query Interface with LLM (Google Gemini)**:
+   - Provide a text box where users can ask questions like:
+     - “Show me top 5 campaigns by spend”
+     - “How did CTR trend for adset XYZ?”
+   - Use Gemini API to:
+     - Convert prompt to SQL based on the schema.
+     - Execute the SQL on the PostgreSQL database.
+     - Return the results in a human-readable format.
+     - Optionally generate a summary or insight based on the result.
+
+4. **Output Display**:
+   - Display SQL query result in a Streamlit data table.
+   - If relevant (like over time), display line/bar charts using `st.line_chart` or `st.bar_chart`.
+   - Display generated insights as markdown or natural language text.
+
+5. **Code Structure**:
+   - Use `.env` or `secrets.toml` for storing tokens (Facebook & Gemini) and DB creds.
+   - Organize code in functions for:
+     - `fetch_campaigns`, `fetch_adsets`, `fetch_ads`, `fetch_insights`
+     - `store_to_postgres`
+     - `run_gemini_query(prompt)`
+
+6. **Dependencies**:
+   - streamlit
+   - requests
+   - psycopg2 or SQLAlchemy
+   - google-generativeai (for Gemini)
+   - pandas
+
+Make sure the app is fully runnable on Replit and uses session state to persist fetched data. Code should be modular and clean.
